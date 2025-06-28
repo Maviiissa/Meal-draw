@@ -48,18 +48,69 @@
     const cards = {
       R: [
         { name: '黑椒鸡胸肉炒甜椒', ingredients: '鸡胸150g，红黄椒各50g，洋葱30g', cal: '350 kcal' },
-        { name: '酱香烤鸡腿排', ingredients: '鸡腿带皮200g，蜂蜜5g，酱油', cal: '430 kcal' },
-        // ... 共20张R卡
+        { name: '酱香烤鸡腿排', ingredients: '鸡腿200g，蜂蜜5g，酱油10ml', cal: '430 kcal' },
+        { name: '鸡蛋牛肉炒饭', ingredients: '牛肉丝100g，鸡蛋1个，糙米饭120g', cal: '520 kcal' },
+        { name: '鸡胸藜麦沙拉', ingredients: '鸡胸100g，藜麦80g，西红柿50g', cal: '400 kcal' },
+        { name: '鸭胸炒西兰花', ingredients: '鸭胸120g，西兰花100g', cal: '420 kcal' },
+        { name: '青酱牛肉意面', ingredients: '牛肉末100g，全麦意面80g，青酱20g', cal: '480 kcal' },
+        { name: '豆腐鸡肉煲', ingredients: '鸡腿肉120g，北豆腐150g，香菇3朵', cal: '440 kcal' },
+        { name: '香煎牛排配南瓜泥', ingredients: '牛排150g，南瓜120g，橄榄油5g', cal: '500 kcal' },
+        { name: '虾仁炒蛋', ingredients: '虾仁80g，鸡蛋2个', cal: '350 kcal' },
+        { name: '鸡肉蛋白炒饭', ingredients: '鸡胸120g，蛋白2个，糙米饭100g', cal: '420 kcal' },
+        { name: '鸭胸煎饼卷', ingredients: '鸭胸80g，全麦饼皮60g，黄瓜条30g', cal: '390 kcal' },
+        { name: '照烧鸡腿便当', ingredients: '鸡腿150g，照烧酱15g，米饭80g', cal: '480 kcal' },
+        { name: '牛肉炒苦瓜', ingredients: '牛肉片100g，苦瓜100g', cal: '370 kcal' },
+        { name: '金枪鱼土豆泥', ingredients: '金枪鱼80g，土豆150g，酸奶酱20g', cal: '390 kcal' },
+        { name: '鸡胸炖冬瓜', ingredients: '鸡胸150g，冬瓜200g，虾皮5g', cal: '350 kcal' },
+        { name: '黑椒牛柳配南瓜', ingredients: '牛肉丝120g，南瓜120g', cal: '420 kcal' },
+        { name: '香葱煎蛋鸭肉饭', ingredients: '鸭腿肉100g，鸡蛋1个，糙米饭80g', cal: '480 kcal' },
+        { name: '蒸鸡蛋虾仁碗', ingredients: '鸡蛋2个，虾仁50g', cal: '300 kcal' },
+        { name: '鸡肉糙米饭团', ingredients: '鸡胸碎100g，糙米100g，紫菜', cal: '400 kcal' },
+        { name: '烤牛肉三明治', ingredients: '牛肉片80g，全麦面包60g，芥末酱', cal: '420 kcal' }
       ],
       SR: [
         { name: '番茄鸡蛋面', ingredients: '番茄150g，鸡蛋2个，面条100g', cal: '520 kcal，快走40分钟抵消' },
         { name: '台式卤肉饭', ingredients: '猪肉末120g，米饭100g，卤蛋1个', cal: '650 kcal，慢跑30分钟抵消' },
-        // ... 共20张SR卡
+        { name: '酱爆鸡丁盖饭', ingredients: '鸡腿肉100g，青椒50g，米饭100g', cal: '580 kcal，健身操45分钟抵消' },
+        { name: '红烧茄子盖饭', ingredients: '茄子150g，蒜，酱油，米饭100g', cal: '580 kcal，登山30分钟抵消' },
+        { name: '韭菜鸡蛋水饺', ingredients: '韭菜50g，鸡蛋2个，饺子皮10张', cal: '520 kcal，瑜伽60分钟抵消' },
+        { name: '香葱鸡肉煎饺', ingredients: '鸡肉馅100g，饺子皮8张', cal: '500 kcal，暴走50分钟抵消' },
+        { name: '小米粥+蛋饼', ingredients: '小米粥200ml，全麦饼60g，鸡蛋1个', cal: '480 kcal，舞蹈45分钟抵消' },
+        { name: '三鲜馄饨', ingredients: '猪肉+虾仁+香菇，馄饨皮12个', cal: '510 kcal，动感单车25分钟抵消' },
+        { name: '豆腐炒米粉', ingredients: '北豆腐100g，米粉80g，胡萝卜30g', cal: '540 kcal，有氧训练40分钟抵消' },
+        { name: '青椒土豆丝盖饭', ingredients: '土豆150g，青椒50g，米饭100g', cal: '550 kcal，跑步40分钟抵消' },
+        { name: '酸辣粉', ingredients: '红薯粉80g，酸豆角、辣油、花生', cal: '600 kcal，跳绳30分钟抵消' },
+        { name: '香菇滑鸡焖饭', ingredients: '鸡腿肉100g，香菇50g，米饭100g', cal: '560 kcal，普拉提40分钟抵消' },
+        { name: '韭菜盒子', ingredients: '韭菜50g，鸡蛋1个，面团100g', cal: '480 kcal，快走45分钟抵消' },
+        { name: '荷叶糯米鸡', ingredients: '糯米100g，鸡肉80g，香菇，蛋黄', cal: '580 kcal，健身操45分钟抵消' },
+        { name: '粢饭团', ingredients: '糯米120g，油条30g，肉松10g', cal: '600 kcal，慢跑40分钟抵消' },
+        { name: '红糖糍粑', ingredients: '糯米糍粑80g，红糖酱20g', cal: '420 kcal，瑜伽60分钟抵消' },
+        { name: '小笼包', ingredients: '猪肉馅100g，小笼包皮8个', cal: '510 kcal，散步90分钟抵消' },
+        { name: '桂花糯米藕', ingredients: '糯米80g，藕150g，红枣，桂花酱', cal: '550 kcal，平板支撑+深蹲混合30分钟抵消' },
+        { name: '鸡肉葱油拌面', ingredients: '鸡胸肉80g，面条100g，葱油20g', cal: '540 kcal，慢骑40分钟抵消' },
+        { name: '馄饨鸡蛋面', ingredients: '馄饨6个，面条80g，鸡蛋1个', cal: '560 kcal，快走45分钟抵消' }
       ],
       SSR: [
         { name: '寿司拼盘', cuisine: '日本料理', budget: '$22' },
         { name: '麻辣香锅', cuisine: '川菜', budget: '$20' },
-        // ... 共20张SSR卡
+        { name: '石锅拌饭', cuisine: '韩式', budget: '$18' },
+        { name: '炸鸡+啤酒', cuisine: '韩国', budget: '$28' },
+        { name: '意面配蒜香面包', cuisine: '意大利餐', budget: '$24' },
+        { name: '披萨+可乐套餐', cuisine: '美式', budget: '$25' },
+        { name: '海南鸡饭', cuisine: '新加坡', budget: '$18' },
+        { name: '日式拉面+煎饺', cuisine: '日本料理', budget: '$20' },
+        { name: '咖喱饭', cuisine: '泰国', budget: '$19' },
+        { name: '烧烤拼盘', cuisine: '中式夜宵', budget: '$26' },
+        { name: '西式早午餐', cuisine: '澳式/西式', budget: '$28' },
+        { name: '牛肉炒粉', cuisine: '东南亚', budget: '$21' },
+        { name: '奶茶+炸鸡排', cuisine: '台式', budget: '$20' },
+        { name: '米线套餐', cuisine: '云南风味', budget: '$18' },
+        { name: '芝士焗饭', cuisine: '港式', budget: '$22' },
+        { name: '韩式烤肉自助', cuisine: '韩国', budget: '$45' },
+        { name: '越南牛肉粉', cuisine: '越南', budget: '$18' },
+        { name: '西餐厅牛排+红酒', cuisine: '欧式', budget: '$50' },
+        { name: '意式千层面', cuisine: '意大利', budget: '$26' },
+        { name: '大碗炸酱面', cuisine: '北方面食', budget: '$20' }
       ]
     };
 
