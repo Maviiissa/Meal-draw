@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>每日饮食抽卡</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9f8f1; /* 米白 */
-      color: #2e5939; /* 深绿色 */
+      background-color: #f9f8f1;
+      color: #2e5939;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -17,7 +17,7 @@
       margin: 0;
     }
     h1 {
-      color: #4caf50; /* 健康绿色 */
+      color: #4caf50;
     }
     button {
       padding: 1rem 2rem;
@@ -36,6 +36,7 @@
       border-radius: 10px;
       max-width: 400px;
       text-align: left;
+      white-space: pre-line;
     }
   </style>
 </head>
@@ -86,7 +87,7 @@
         { name: '粢饭团', ingredients: '糯米120g，油条30g，肉松10g', cal: '600 kcal，慢跑40分钟抵消' },
         { name: '红糖糍粑', ingredients: '糯米糍粑80g，红糖酱20g', cal: '420 kcal，瑜伽60分钟抵消' },
         { name: '小笼包', ingredients: '猪肉馅100g，小笼包皮8个', cal: '510 kcal，散步90分钟抵消' },
-        { name: '桂花糯米藕', ingredients: '糯米80g，藕150g，红枣，桂花酱', cal: '550 kcal，平板支撑+深蹲混合30分钟抵消' },
+        { name: '桂花糯米藕', ingredients: '糯米80g，藕150g，红枣，桂花酱', cal: '550 kcal，深蹲+平板支撑30分钟抵消' },
         { name: '鸡肉葱油拌面', ingredients: '鸡胸肉80g，面条100g，葱油20g', cal: '540 kcal，慢骑40分钟抵消' },
         { name: '馄饨鸡蛋面', ingredients: '馄饨6个，面条80g，鸡蛋1个', cal: '560 kcal，快走45分钟抵消' }
       ],
@@ -108,35 +109,13 @@
         { name: '芝士焗饭', cuisine: '港式', budget: '$22' },
         { name: '韩式烤肉自助', cuisine: '韩国', budget: '$45' },
         { name: '越南牛肉粉', cuisine: '越南', budget: '$18' },
-        { name: '西餐厅牛排+红酒', cuisine: '欧式', budget: '$50' },
+        { name: '牛排+红酒套餐', cuisine: '欧式', budget: '$50' },
         { name: '意式千层面', cuisine: '意大利', budget: '$26' },
         { name: '大碗炸酱面', cuisine: '北方面食', budget: '$20' }
       ]
     };
 
-    let drawCount = 0;
-    const limit = 2;
-    const resetHour = 12; // 每12小时刷新
-    const lastDrawKey = 'lastDraw';
-    const drawCountKey = 'drawCount';
-
     function drawCard() {
-      const now = new Date();
-      const lastDraw = new Date(localStorage.getItem(lastDrawKey) || 0);
-      const hoursSinceLast = (now - lastDraw) / 36e5;
-
-      if (hoursSinceLast >= resetHour) {
-        localStorage.setItem(drawCountKey, '0');
-        drawCount = 0;
-      } else {
-        drawCount = parseInt(localStorage.getItem(drawCountKey) || '0');
-      }
-
-      if (drawCount >= limit) {
-        document.getElementById('card').innerText = '你今天已经抽过2次卡啦！请12小时后再试。';
-        return;
-      }
-
       const rand = Math.random();
       let pool = 'R';
       if (rand < 0.1) pool = 'SSR';
@@ -154,9 +133,6 @@
       }
 
       document.getElementById('card').innerText = display;
-      drawCount++;
-      localStorage.setItem(drawCountKey, drawCount);
-      localStorage.setItem(lastDrawKey, now.toISOString());
     }
   </script>
 </body>
