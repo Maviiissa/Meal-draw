@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日饮食抽卡</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f8f1; /* 米白 */
+      color: #2e5939; /* 深绿色 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #4caf50; /* 健康绿色 */
+    }
+    button {
+      padding: 1rem 2rem;
+      background-color: #a8d5ba;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    #card {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #ffffff;
+      border: 2px solid #c8e6c9;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌱 每日饮食抽卡</h1>
+  <div id="card">点击下方按钮开始抽卡！</div>
+  <button onclick="drawCard()">抽一张卡</button>
+
+  <script>
+    const cards = {
+      R: [
+        { name: '黑椒鸡胸肉炒甜椒', ingredients: '鸡胸150g，红黄椒各50g，洋葱30g', cal: '350 kcal' },
+        { name: '酱香烤鸡腿排', ingredients: '鸡腿带皮200g，蜂蜜5g，酱油', cal: '430 kcal' },
+        // ... 共20张R卡
+      ],
+      SR: [
+        { name: '番茄鸡蛋面', ingredients: '番茄150g，鸡蛋2个，面条100g', cal: '520 kcal，快走40分钟抵消' },
+        { name: '台式卤肉饭', ingredients: '猪肉末120g，米饭100g，卤蛋1个', cal: '650 kcal，慢跑30分钟抵消' },
+        // ... 共20张SR卡
+      ],
+      SSR: [
+        { name: '寿司拼盘', cuisine: '日本料理', budget: '$22' },
+        { name: '麻辣香锅', cuisine: '川菜', budget: '$20' },
+        // ... 共20张SSR卡
+      ]
+    };
+
+    let drawCount = 0;
+    const limit = 2;
+    const resetHour = 12; // 每12小时刷新
+    const lastDrawKey = 'lastDraw';
+    const drawCountKey = 'drawCount';
+
+    function drawCard() {
+      const now = new Date();
+      const lastDraw = new Date(localStorage.getItem(lastDrawKey) || 0);
+      const hoursSinceLast = (now - lastDraw) / 36e5;
+
+      if (hoursSinceLast >= resetHour) {
+        localStorage.setItem(drawCountKey, '0');
+        drawCount = 0;
+      } else {
+        drawCount = parseInt(localStorage.getItem(drawCountKey) || '0');
+      }
+
+      if (drawCount >= limit) {
+        document.getElementById('card').innerText = '你今天已经抽过2次卡啦！请12小时后再试。';
+        return;
+      }
+
+      const rand = Math.random();
+      let pool = 'R';
+      if (rand < 0.1) pool = 'SSR';
+      else if (rand < 0.4) pool = 'SR';
+
+      const cardList = cards[pool];
+      const card = cardList[Math.floor(Math.random() * cardList.length)];
+
+      let display = '';
+      if (pool === 'SSR') {
+        display = `⭐ SSR·别管我了卡\n【外食】${card.name}\n菜系：${card.cuisine}\n预算：${card.budget}`;
+      } else {
+        const title = pool === 'R' ? 'R·健康饮食卡' : 'SR·碳水保命卡';
+        display = `🍱 ${title}\n【菜名】${card.name}\n【食材】${card.ingredients}\n【热量】${card.cal}`;
+      }
+
+      document.getElementById('card').innerText = display;
+      drawCount++;
+      localStorage.setItem(drawCountKey, drawCount);
+      localStorage.setItem(lastDrawKey, now.toISOString());
+    }
+  </script>
+</body>
+</html>
