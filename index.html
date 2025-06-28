@@ -12,12 +12,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      justify-content: flex-start;
+      min-height: 100vh;
       margin: 0;
     }
     h1 {
       color: #4caf50;
+      margin-top: 36px;
     }
     button {
       padding: 1rem 2rem;
@@ -38,14 +39,44 @@
       text-align: left;
       white-space: pre-line;
     }
+    #history-title {
+      margin-top: 40px;
+      color: #4caf50;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    #history {
+      background: #fff;
+      margin: 16px 0 36px 0;
+      border: 1.5px solid #e3f3e4;
+      border-radius: 8px;
+      max-width: 420px;
+      width: 90vw;
+      padding: 1rem;
+      font-size: 0.95rem;
+      color: #425941;
+      box-shadow: 0 1px 8px 0 #ecf3ee;
+      min-height: 30px;
+    }
+    .history-item {
+      margin-bottom: 0.6em;
+      border-bottom: 1px dashed #dbeedd;
+      padding-bottom: 0.5em;
+    }
+    .history-date {
+      color: #8ab49d;
+      font-size: 0.87em;
+    }
   </style>
 </head>
 <body>
   <h1>🌱 每日饮食抽卡</h1>
   <div id="card">点击下方按钮开始抽卡！</div>
   <button onclick="drawCard()">抽一张卡</button>
+  <div id="history-title">🎴 抽卡记录（历史）</div>
+  <div id="history"></div>
 
-  <script>
+<script>
     const cards = {
       R: [
         { name: '黑椒鸡胸肉炒芹菜', ingredients: '鸡胸150g，芹菜50g，洋葱30g', cal: '350 kcal' },
@@ -137,15 +168,56 @@
       ]
     };
 
+    // 限制相关
+    const limit = 2; // 每天抽卡上限
+    const resetHour = 12; // 每隔12小时刷新
+    const lastDrawKey = 'lastDraw';
+    const drawCountKey = 'drawCount';
+    const historyKey = 'drawHistory';
+
+    function formatDate(date) {
+      return date.getFullYear() + '-' +
+        String(date.getMonth() + 1).padStart(2, '0') + '-' +
+        String(date.getDate()).padStart(2, '0') + ' ' +
+        String(date.getHours()).padStart(2, '0') + ':' +
+        String(date.getMinutes()).padStart(2, '0');
+    }
+
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+      const historyDiv = document.getElementById('history');
+      if (!history.length) {
+        historyDiv.innerHTML = '（无历史记录）';
+        return;
+      }
+      historyDiv.innerHTML = history.map(item =>
+        `<div class="history-item">
+          <div>${item.content.replace(/\n/g, '<br>')}</div>
+          <div class="history-date">${item.time}</div>
+        </div>`
+      ).join('');
+    }
+
     function drawCard() {
+      const now = new Date();
+      const lastDraw = new Date(localStorage.getItem(lastDrawKey) || 0);
+      const hoursSinceLast = (now - lastDraw) / 36e5;
+      if (hoursSinceLast >= resetHour) {
+        localStorage.setItem(drawCountKey, '0');
+      }
+      let drawCount = parseInt(localStorage.getItem(drawCountKey) || '0');
+      if (drawCount >= limit) {
+        document.getElementById('card').innerText =
+          '你今天已经抽过2次卡啦！请12小时后再试。';
+        return;
+      }
+      // 抽卡逻辑
       const rand = Math.random();
       let pool = 'R';
       if (rand < 0.1) pool = 'SSR';
       else if (rand < 0.4) pool = 'SR';
-
       const cardList = cards[pool];
       const card = cardList[Math.floor(Math.random() * cardList.length)];
-
       let display = '';
       if (pool === 'SSR') {
         display = `⭐ SSR·别管我了卡\n【外食】${card.name}\n菜系：${card.cuisine}\n预算：${card.budget}`;
@@ -153,9 +225,26 @@
         const title = pool === 'R' ? 'R·健康饮食卡' : 'SR·碳水保命卡';
         display = `🍱 ${title}\n【菜名】${card.name}\n【食材】${card.ingredients}\n【热量】${card.cal}`;
       }
-
       document.getElementById('card').innerText = display;
+
+      // 抽卡记录写入
+      let history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+      history.unshift({
+        content: display,
+        time: formatDate(now)
+      });
+      // 最多保存50条历史
+      if (history.length > 50) history = history.slice(0, 50);
+      localStorage.setItem(historyKey, JSON.stringify(history));
+      // 更新时间和次数
+      drawCount++;
+      localStorage.setItem(drawCountKey, drawCount);
+      localStorage.setItem(lastDrawKey, now.toISOString());
+      loadHistory();
     }
+
+    // 页面加载后初始化历史
+    window.onload = loadHistory;
   </script>
 </body>
 </html>
