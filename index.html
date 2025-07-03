@@ -213,8 +213,8 @@
       // 抽卡逻辑
       const rand = Math.random();
       let pool = 'R';
-      if (rand < 0.1) pool = 'SSR';
-      else if (rand < 0.4) pool = 'SR';
+      if (rand < 0.2) pool = 'SSR';
+      else if (rand < 0.3) pool = 'SR';
       const cardList = cards[pool];
       const card = cardList[Math.floor(Math.random() * cardList.length)];
       let display = '';
